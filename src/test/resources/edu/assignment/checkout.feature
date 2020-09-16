@@ -1,27 +1,27 @@
 Feature: Checkout
-  Scenario: Checkout a banana
-    Given the price of a "banana" 40
-    When I checkout 1 "banana"
-    Then the total price should be 40
-  Scenario: Two bananas checked out separately
-    Given the price of a "banana" 40
-    When I checkout 1 "banana"
-    And I checkout 1 "banana"
-    Then the total price should be 80
-  Scenario: A banana and an apple
-    Given the price of a "banana" 40
-    And the price of a "apple" 25
-    When I checkout 1 "banana"
-    And I checkout 1 "apple"
-    Then the total price should be 65
-  Scenario: A banana and an 2 apples
-    Given the price of a "banana" 40
-    And the price of a "apple" 25
-    When I checkout 1 "banana"
-    And I checkout 2 "apple"
-    Then the total price should be 90
-  Scenario: Four bananas each two checked out separately
-    Given the price of a "banana" 40
-    When I checkout 2 "banana"
-    And I checkout 2 "banana"
-    Then the total price should be 160
+  Scenario Outline: Checkout an item with different amounts
+    Given the price of a <item> <price>
+    When I checkout <amount> <item>
+    Then the total price should be <total>
+    Examples:
+      | item     | price  | amount| total |
+      | "banana" |   40   |   1   |   40  |
+      |  "apple" |   25   |   1   |   25  |
+      |  "fig"   |   15   |   1   |   15  |
+      |  "fig"   |   15   |   3   |   45  |
+      | "banana" |   40   |   3   |   120 |
+      |  "apple" |   25   |   3   |   75  |
+  Scenario Outline: Checkout two items
+    Given the price of a <first_item> <first_price>
+    And the price of a <second_item> <second_price>
+    When I checkout <first_amount> <first_item>
+    And I checkout <second_amount> <second_item>
+    Then the total price should be <total>
+    Examples:
+      | first_item | first_price | first_amount|second_item|second_price |second_amount| total |
+      | "banana"   |      40     |       1     | "apple"   |      25     |       1     |   65  |
+      |  "apple"   |      25     |       1     | "fig"     |      15     |       1     |   40  |
+      |  "banana"  |      40     |       1     |  "banana" |      40     |       1     |   80  |
+      | "banana"   |      40     |       3     | "apple"   |      25     |       4     |   220 |
+      |  "apple"   |      25     |       6     | "fig"     |      15     |       2     |   180 |
+      |  "banana"  |      40     |       3     |  "banana" |      40     |       4     |   280 |
