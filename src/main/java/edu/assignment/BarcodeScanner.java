@@ -1,4 +1,4 @@
-package edu.assaignment;
+package edu.assignment;
 
 import java.util.HashMap;
 
